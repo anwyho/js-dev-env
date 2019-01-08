@@ -7,12 +7,6 @@ import config from '../webpack.config.dev';
 
 /* eslint-disable no-console */
 
-// var express = require('express');
-// var path = require('path');
-// var open = require('open');
-// // var webpack = require('webpack');
-// // var config = require('../webpack.config.dev');
-
 const port = 3000;
 var app = express();
 const compiler = webpack(config);
@@ -25,6 +19,24 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../src/index.html'))
 });
+
+// Hardcoded for simplicity
+app.get('/projects', function (req, res) {
+    res.json([{
+            "name": "Compose",
+            "description": "A framework for quickly creating Facebook Messenger chatbots."
+        },
+        {
+            "name": "Bartbot",
+            "description": "A chatbot that returns live BART schedules and more!"
+        }
+    ]);
+});
+
+// app.get('/projects', function (req, res) {
+//     // Hardcode for simplicity
+//     res.json();
+// });
 
 app.listen(port, function (err) {
     if (err) {

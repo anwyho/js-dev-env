@@ -11,14 +11,14 @@ describe('Our first test', () => {
 });
 
 describe('index.html', () => {
-    it('should say hello', (done) => {
+    it('should say projects', (done) => {
         // read in index.html
         const index = fs.readFileSync('./src/index.html', 'utf-8');
         // Test runs asynchronously with a callback
         jsdom.env(index, function (err, window) {
             // Get reference to first h1 on page
             const h1 = window.document.getElementsByTagName('h1')[0];
-            expect(h1.innerHTML).to.equal('hello');
+            expect(h1.innerHTML).to.equal('Projects');
             // Test runs asynchronously
             // Need to tell Mocha test is done
             done();

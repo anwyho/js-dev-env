@@ -1,9 +1,32 @@
 import './index.css';
+import {
+    deleteProject,
+    getProjects
+} from './api/projectApi';
 
-import numeral from 'numeral';
+// Populate users data
+getProjects().then(result => {
+    let projectsBody = "";
 
-/* eslint-disable no-console */
+    result.forEach(project => {
+        projectsBody += `<tr>
+        <td><a href="#${project.id}" data-id="${project.id}" class="deleteProject">Delete</a></td>
+        <td>"${project.name}"</td>
+        <td>"${project.description}"</td>
+        </tr>`
+    });
 
-const courseValue = numeral(1000).format('$0,0.00');
+    global.document.getElementById("projects").innerHTML = projectsBody
 
-console.log(`I would pay ${courseValue} for this awesome course!`);
+    const deleteLinks = global.document.getElementsByClassName('deleteProject');
+
+    Array.from(deleteLinks, link => {
+        link.onclick = function (event) {
+            const element = event.target;
+            event.preventDefault();
+            deleteProject(element.attributes["data-id"].value);
+            const row = element.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        };
+    });
+});
